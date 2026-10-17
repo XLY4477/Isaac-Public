@@ -1,5 +1,5 @@
 {
-  "output": "H:\\CODEX\\PROJECTS\\group-2026-09-13-zh\\webapp\\public\\game\\game.swf",
+  "output": "public/game/game.swf",
   "bytes": 43130938,
   "uncompressedBytes": 46576175,
   "sha256": "5d34aaa52b2a1c0207bb6d0ea02ae69659e91b89e2342a01da711f2fec7efdc9",

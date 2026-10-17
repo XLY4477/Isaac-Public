@@ -1,0 +1,1 @@
+window.RufflePlayer=window.RufflePlayer||{};window.RufflePlayer.config={...(window.RufflePlayer.config||{}),preferredRenderer:"wgpu-webgl",logLevel:"info",autoplay:"on",letterbox:"on",scale:"showAll",quality:"high",allowFullscreen:true,unmuteOverlay:"hidden",showSwfDownload:false,allowScriptAccess:false,allowNetworking:"none"};

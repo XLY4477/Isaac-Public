@@ -1,0 +1,1 @@
+(async()=>{const status=document.getElementById('netStatus');try{const r=await fetch('./game.swf',{method:'HEAD',cache:'no-store'});if(!r.ok)throw Error();status.textContent='游戏文件可用'}catch{status.textContent=navigator.onLine?'加载中':'未缓存'}})();

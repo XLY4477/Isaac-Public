@@ -1,7 +1,4 @@
-# Isaac Web App shell
+# Isaac Web App
 
-This folder contains the locally hosted web interface, touch controls, PWA shell, and Ruffle runtime. It does not include the game movie file.
+网页包包含 Ruffle 本地运行器、触控 UI 和 `game.swf`。使用 `index.html` 启动；iPhone 添加到主屏幕需要 HTTPS。首次启动需联网缓存，缓存完成后可离线运行。页面不加载远端脚本、统计或广告。Safari 的离线持久性受系统存储策略影响。
 
-To run it, place a game SWF that you are authorized to use at `Isaac-WebApp/game.swf`, then serve the repository over HTTPS or localhost. The file is ignored by Git and is not part of this public repository.
-
-The UI and runtime are served from this site; the shell does not load remote analytics, ads, or third-party scripts. Offline caching covers same-origin assets only. Initial loading and iPhone Safari compatibility depend on the user's own SWF and browser.

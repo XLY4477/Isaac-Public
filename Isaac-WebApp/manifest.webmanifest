@@ -1,1 +1,17 @@
-{"name":"Isaac Web App","short_name":"Isaac","start_url":"./index.html","display":"standalone","orientation":"any","background_color":"#07111c","theme_color":"#07111c","icons":[{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
+{
+  "id": "./",
+  "name": "以撒的结合：羔羊永恒",
+  "short_name": "以撒永恒",
+  "description": "离线运行的永恒版游戏 Web App",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#07111c",
+  "theme_color": "#07111c",
+  "icons": [
+    {"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"}
+  ]
+}

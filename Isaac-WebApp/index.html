@@ -1,10 +1,79 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#07111c"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Isaac"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; connect-src 'self' blob:; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; worker-src 'self' blob:; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/png" href="./icon.svg"><link rel="apple-touch-icon" href="./icon.svg"><link rel="stylesheet" href="./style.css"><title>Isaac</title><script src="./ruffle-config.js"></script><script defer src="./ruffle/ruffle.js"></script><script defer src="./app.js"></script></head>
-<body><header class="topbar"><div class="brand"><img class="mark" src="./icon.svg" alt=""><span><b>Isaac</b><small>OFFLINE WEB APP</small></span></div><div class="top-actions"><span id="netStatus" class="net-status">准备中</span><button id="fullBtn" class="icon-button" aria-label="Fullscreen">⛶</button><button id="settingsBtn" class="icon-button settings-trigger" aria-expanded="false" aria-label="Settings">⚙ <span>设置</span></button></div></header>
-<main id="stage" aria-label="游戏画面"><div id="gameFrame"></div><div id="loading" class="loading"><span class="spinner"></span><b>正在载入游戏</b><small>首次加载需要一点时间</small></div>
-<div id="controls" class="controls" hidden><div id="moveStick" class="stick" data-widget="move" aria-label="移动摇杆"><div class="track"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><i class="center-dot"></i><i class="knob"></i></div><label>移动</label></div><div id="shootStick" class="stick" data-widget="shoot" aria-label="射击摇杆"><div class="track"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><i class="center-dot"></i><i class="knob"></i></div><label>射击</label></div><button class="hud-hit" data-widget="bomb" data-key="KeyE" aria-label="炸弹"></button><button class="hud-hit" data-widget="card" data-key="KeyQ" aria-label="卡牌或药丸"></button><button class="hud-hit" data-widget="active" data-key="Space" aria-label="主动道具"></button></div>
-<div id="settings" class="settings" hidden><div class="settings-head"><div><small>CONTROL CENTER</small><b>游戏设置</b></div><button id="closeSettings" class="close-button" aria-label="关闭">×</button></div><div class="settings-info"><i></i><span id="privacyStatus">游戏文件仅从当前网页来源读取</span></div><label class="slider-row"><span>操控透明度 <output id="opacityText">48%</output></span><input id="opacityRange" type="range" min="0" max="85" value="48"><small>0% 完全隐形，但仍可触控</small></label><label class="slider-row"><span>摇杆大小 <output id="sizeText">128</output></span><input id="sizeRange" type="range" min="96" max="170" value="128"></label><div class="setting-actions"><button id="visibilityBtn">隐藏摇杆</button><button id="layoutBtn" class="primary">按键位置编辑</button><button id="resetBtn">恢复默认位置</button></div><div class="privacy-note">本页仅访问本站文件；设置保存在本机浏览器。游戏存档由本地运行器保存在本站来源下。</div></div>
-<div id="layoutEditor" class="layout-editor" hidden><div class="editor-panel"><div class="editor-toolbar"><b>自定义方案</b><button id="editorExit">离开</button><button id="editorReset">恢复默认</button><button id="editorSave" class="save">保存</button></div><div class="widget-picker" aria-label="选择要调整的控件"><button data-select-widget="move">移动</button><button data-select-widget="shoot">射击</button><button data-select-widget="bomb">炸弹</button><button data-select-widget="card">卡牌 / 药丸</button><button data-select-widget="active">主动道具</button></div><div class="editor-body"><div class="editor-sliders"><label><span>大小 <output id="editorSize">128 px</output></span><input id="editorSizeRange" type="range" min="48" max="210" value="128"></label><label><span>透明度 <output id="editorOpacity">48%</output></span><input id="editorOpacityRange" type="range" min="0" max="100" value="48"></label><small id="selectedName">正在调整：移动摇杆</small></div><div class="nudge"><button data-nudge="0,-1" aria-label="上移">▲</button><button data-nudge="-1,0" aria-label="左移">◀</button><button data-nudge="1,0" aria-label="右移">▶</button><button data-nudge="0,1" aria-label="下移">▼</button></div></div></div><div class="editor-tip">选控件后拖动定位；滑杆调大小和透明度，方向键微调。保存后下次自动使用。</div></div>
-<div id="portraitNotice" class="portrait-notice"><span>↻</span><b>请将手机横过来</b><small>横屏后显示游戏与双摇杆</small></div><div id="error" class="error" hidden></div></main></body></html>
-
-
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#07111c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="以撒永恒">
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/icon-180.png">
+  <link rel="stylesheet" href="./style.css">
+  <title>以撒永恒 · 离线版</title>
+  <script>
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      ...(window.RufflePlayer.config || {}),
+      autoplay: "on",
+      letterbox: "on",
+      scale: "showAll",
+      quality: "high",
+      showSwfDownload: false,
+      allowFullscreen: true,
+      unmuteOverlay: "hidden",
+      preferredRenderer: "wgpu-webgl",
+      logLevel: "info"
+    };
+  </script>
+  <script defer src="./vendor/ruffle/ruffle.js"></script>
+  <script defer src="./app.js?roomtest-cache-bust=1"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand"><img src="./icons/icon-180.png" alt="" width="30" height="30"><div><strong>以撒永恒</strong><small>离线 Web App</small></div></div>
+      <div class="top-actions"><button id="settingsToggle" class="toolbar-button settings-toggle" type="button" aria-expanded="false" aria-controls="settingsPanel">⚙ 设置</button></div>
+    </header>
+    <section id="settingsPanel" class="settings-panel" hidden aria-label="游戏设置">
+      <div class="settings-heading"><strong>设置</strong><button id="closeSettings" type="button" aria-label="关闭设置">×</button></div>
+      <span id="connection" class="status-chip"><i></i> 正在检查</span>
+      <div id="storageStatus" class="storage-status">网页存档：检查中</div>
+      <div class="settings-actions">
+        <button id="saveExport" type="button">导出存档</button><button id="saveImport" type="button">导入存档</button>
+        <button id="requestStorage" type="button">保护存档</button><button id="toggleControls" type="button">隐藏摇杆</button>
+        <button id="toggleHelperUI" type="button">打开道具辅助面板</button>
+        <input id="backupFile" type="file" accept="application/json,.json" hidden>
+      </div>
+      <label class="setting-range"><span>摇杆透明度 <output id="opacityValue">48%</output></span><input id="joystickOpacity" type="range" min="20" max="85" value="48"></label>
+      <label class="setting-range"><span>摇杆大小 <output id="sizeValue">128 px</output></span><input id="joystickSize" type="range" min="96" max="170" value="128"></label>
+      <label class="setting-check"><input id="showItemZones" type="checkbox"><span>显示物品点击位置（校准用）</span></label>
+    </section>
+    <main id="gameArea">
+      <div id="playerHost" aria-label="以撒永恒游戏画面">
+        <section id="welcome" class="welcome-card">
+          <div class="heart-mark"><img src="./icons/icon-180.png" alt=""></div>
+          <p class="eyebrow">SAFARI 离线游戏</p>
+          <h1>以撒的结合：羔羊永恒</h1>
+          <p class="welcome-copy">游戏、运行面板和资源都在本地运行。首次启动会缓存约 43 MB 游戏文件及运行组件。</p>
+          <div class="download-progress"><span id="downloadBar"></span></div>
+          <div id="welcomeStatus" class="welcome-status">准备启动…</div>
+          <button id="startGame" class="primary-button" type="button">开始游戏</button>
+          <p class="install-note">安装：Safari 分享按钮 → 添加到主屏幕。缓存完成后可离线打开。</p>
+        </section>
+        <div id="gameError" class="game-error" hidden></div>
+      </div>
+      <div id="touchLayer" class="touch-layer" hidden aria-label="触控操作">
+        <div id="moveStick" class="virtual-stick move-stick" role="application" aria-label="移动摇杆，拖动控制方向"><div class="stick-ring"><span class="stick-dot"></span><span class="stick-knob" aria-hidden="true"></span></div><span class="stick-caption">移动</span></div>
+        <div id="shootStick" class="virtual-stick shoot-stick" role="application" aria-label="射击摇杆，拖动控制方向"><div class="stick-ring"><span class="stick-dot"></span><span class="stick-knob" aria-hidden="true"></span></div><span class="stick-caption">射击</span></div>
+        <button class="item-hit bomb-hit" data-key="KeyE" data-label="炸弹" type="button" aria-label="点击游戏中的炸弹图标以放置炸弹" title="炸弹：点击游戏内炸弹图标"></button>
+        <button class="item-hit card-hit" data-key="KeyQ" data-label="卡牌 / 药丸" type="button" aria-label="点击游戏中的卡牌或药丸图标以使用" title="卡牌或药丸：点击游戏内对应图标"></button>
+        <button class="item-hit active-hit" data-key="Space" data-label="主动道具" type="button" aria-label="点击游戏中的主动道具图标以使用" title="主动道具：点击游戏内主动道具图标"></button>
+      </div>
+      <div id="portraitNotice" class="portrait-notice"><span>↻</span><b>请将手机横过来</b><small>横屏后显示完整游戏画面和触控按键</small></div>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
